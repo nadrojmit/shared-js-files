@@ -42,7 +42,7 @@ function revealContent() {
     //show relevant content
     jQuery(this).nextUntil("h1, h2").css("display","block");
     //add all text in current reveal to variable and post to responsive voice to speak
-    let currentText = $(this).nextUntil("h1, h2").text();
+    let currentText = jQuery(this).nextUntil("h1, h2").text();
     responsiveVoice.speak(currentText);
     console.log("revealContent finish");
 }
