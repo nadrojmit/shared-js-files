@@ -1,0 +1,17 @@
+@charset "utf-8";
+/* CSS Document */
+.top-bar, .header-bar {display:none;}
+body { background-color:#fff; padding-top:50px !important;}
+.container .page-content p, .container .page-content ol, .page-content-blocks .post-module-content .block.copy_block ol, .page-content-blocks .post-module-content .block.copy_block ul, .page-content-blocks .post-module-content .block.three_column_block .post-block .image-box .copy ol, .page-content-blocks .post-module-content .block.three_column_block .post-block .image-box .copy ul, .page-content-blocks .post-module-content .block.two_column_block .post-block .image-box .copy ol, .page-content-blocks .post-module-content .block.two_column_block .post-block .image-box .copy ul { margin-left:25px !important;}
+.column-box.column-type-4 .column-left { padding-right:0px !important; flex:0 0 81.73%;}
+
+h3 { background-color:#0a8ac4; width:100%; line-height: 1.2; cursor: pointer; padding:20px!important;  color:#fff; }
+h4 { background-color:#d2ebf2; width:100%; cursor: pointer;  padding:30px!important; padding-right:50px !important; padding-top:50px !important; color:#000; margin-left:20px !important; }
+h4.current, h3.current { background-color:#f05e62; color:#fff;}
+
+h3::before, h4::before { content:">"; margin-right:10px; font-size:1.3em; line-height: 0.5;}
+h4.current::before, h3.current::before { transform-origin: 0 0; transform: rotate(90deg);  display: inline-block; margin-right:0px; margin-left:10px;  line-height: 0.5;}
+
+li h4 { background-color:#fff; padding-top:0px !important; padding-bottom:0px !important; cursor: default; margin-left: 0px !important; padding-left:0px !important;}
+li h4::before { width:0px; content:""; margin-right:0px; }
+.page-content-blocks .post-module-content .block.copy_block > h3, .page-content-blocks .post-module-content .block.copy_block > h4, .page-content-blocks .post-module-content .block.three_column_block .post-block .image-box .copy > h3, .page-content-blocks .post-module-content .block.three_column_block .post-block .image-box .copy > h4, .page-content-blocks .post-module-content .block.two_column_block .post-block .image-box .copy > h3, .page-content-blocks .post-module-content .block.two_column_block .post-block .image-box .copy > h4 { padding-top:10px !important; padding-bottom: 10px !important;}
