@@ -4,7 +4,7 @@ jQuery(document).ready(function() {
     //once loaded loop headings and hide subcontent
     hideAll();
     //add click to reveal to headings
-    jQuery("h3, h4").each(function() {
+    jQuery("h1, h2").each(function() {
         jQuery(this).on("click", revealContent);
     });
     console.log("articleFixer: Document ready - total subheadings: "+totalSubheadings);
@@ -13,9 +13,9 @@ jQuery(document).ready(function() {
 function hideAll() {
     console.log("hideAll start");
     //hide all subcontent and add spacing
-    jQuery("h3, h4").each(function() {
+    jQuery("h1, h2").each(function() {
         totalSubheadings = totalSubheadings + 1;
-        jQuery(this).nextUntil("h3, h4").css("display","none");
+        jQuery(this).nextUntil("h1, h2").css("display","none");
         jQuery(this).css("padding-top","20px !important");
         jQuery(this).css("padding-bottom","20px !important");
     });
@@ -40,9 +40,9 @@ function revealContent() {
     jQuery(".current").on("click", hideContent);
     console.log("revealContent: current class added and hideContent added");
     //show relevant content
-    jQuery(this).nextUntil("h3, h4").css("display","block");
+    jQuery(this).nextUntil("h1, h2").css("display","block");
     //add all text in current reveal to variable and post to responsive voice to speak
-    let currentText = $(this).nextUntil("h3, h4").text();
+    let currentText = $(this).nextUntil("h1, h2").text();
     responsiveVoice.speak(currentText);
     console.log("revealContent finish");
 }
