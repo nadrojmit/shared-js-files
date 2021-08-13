@@ -117,7 +117,7 @@ function navigateBack(){
 function hideAll() {
     console.log("hideAll start");
     //hide all content
-    jQuery("h1, h2, h3, p, li").css("display","none");
+    jQuery("h1, h2, h3, p, ul, img").css("display","none");
     //turn next button back on
     jQuery("#next").css("display","block");
     console.log("hideAll finish");
