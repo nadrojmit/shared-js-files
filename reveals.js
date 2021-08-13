@@ -37,7 +37,19 @@ function revealContent() {
     let currentPageID = currentClass.substr(currentClass.length -1);
     let currentPage = "#page"+currentPageID;
     //hide rest of content if this is a full screen reveal
-    if(jQuery(this).hasClass("full-screen")){jQuery(currentPage).contents().css('display','none'); jQuery("#slideNav").css('display','none'); jQuery("#slideNav").contents().css('display','none'); fullScreen = 1; updateBody('fullScreenRevealImg'); }
+    let fullScreenReveal = jQuery(this).hasClass("full-screen");
+    let fullScreenDiagram = jQuery(this).hasClass("full-screen-diagram");
+    if((fullScreenReveal)||(fullScreenDiagram)){
+        jQuery(currentPage).contents().css('display','none'); 
+        jQuery("#slideNav").css('display','none'); 
+        jQuery("#slideNav").contents().css('display','none'); 
+        fullScreen = 1;
+        if(fullScreenDiagram) { 
+            updateBody('fullScreenReveal'); } 
+        else {
+            updateBody('fullScreenRevealImg');
+            }
+    }
     //let currentReveal = parseInt(cls.substr(cls.lastIndexOf("1") + 1));
     let currentReveal = cls.substr(cls.lastIndexOf("1"));
     let revealToShow = "#reveal"+currentReveal;
