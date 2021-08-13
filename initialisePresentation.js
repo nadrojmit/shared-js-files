@@ -109,7 +109,7 @@ function getContent(){
         let revealHasImage = jQuery("#reveal"+currentReveal).find("img");
         if(revealHasImage.length !==0){
                 jQuery(revealHasImage).each(function() {
-                    if(jQuery(this).hasClass("diagram")){
+                    if(jQuery(this).parent().hasClass("diagram")){
                         jQuery(".reveal"+currentReveal).addClass("full-screen-diagram");
                         console.log("has diagram");
                     } else {

@@ -16,11 +16,15 @@ function progressSlide() {
     if(!jQuery(this).hasClass("disabled")){
         //hide all displayed content
         hideAll();
-        hideLeftOpenReveals();       
+        hideLeftOpenReveals();
+        //move audio player to bottom
+        jQuery("#audioController").removeClass("onScroll");
         //remove the class current from the previous page
         jQuery("h2.current").removeClass("current");
         //show on the next h2 and add the class current to it
         jQuery(".page"+currentSlide).css("display","block");
+        if(!jQuery(".page"+currentSlide).hasClass("viewed")){updateProgress();}
+        jQuery(".page"+currentSlide).addClass("viewed");
         jQuery(".page"+currentSlide).addClass("current");
         if(!jQuery(".current").closest(".page").hasClass("lastPage, firstPage")){
             updateBody('middleScreen');
@@ -61,7 +65,6 @@ function progressSlide() {
     speakable = speakable.replace(/,/g, "");
     playAudio(speakable);
     console.log(currentText);
-    updateProgress();
     }
 }
 
@@ -114,7 +117,7 @@ function navigateBack(){
 function hideAll() {
     console.log("hideAll start");
     //hide all content
-    jQuery("h1, h2, h3, p").css("display","none");
+    jQuery("h1, h2, h3, p, li").css("display","none");
     //turn next button back on
     jQuery("#next").css("display","block");
     console.log("hideAll finish");

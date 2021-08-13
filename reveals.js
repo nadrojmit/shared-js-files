@@ -24,7 +24,7 @@ function revealContent() {
     //stop current audio
     cancelAudio();
     //increment viewed reveals
-    if(!jQuery(this).hasClass("clicked")){viewedReveals++;}
+    if(!jQuery(this).hasClass("clicked")){viewedReveals++; updateProgress();}
     jQuery(this).addClass("clicked");
     //hide all revealed content before showing new content
     hideReveal();
@@ -37,19 +37,7 @@ function revealContent() {
     let currentPageID = currentClass.substr(currentClass.length -1);
     let currentPage = "#page"+currentPageID;
     //hide rest of content if this is a full screen reveal
-    let fullScreenReveal = jQuery(this).hasClass("full-screen");
-    let fullScreenDiagram = jQuery(this).hasClass("full-screen-diagram");
-    if((fullScreenReveal)||(fullScreenDiagram)){
-        jQuery(currentPage).contents().css('display','none'); 
-        jQuery("#slideNav").css('display','none'); 
-        jQuery("#slideNav").contents().css('display','none'); 
-        fullScreen = 1;
-        if(fullScreenDiagram) { 
-            updateBody('fullScreenReveal'); } 
-        else {
-            updateBody('fullScreenRevealImg');
-            }
-    }
+    if(jQuery(this).hasClass("full-screen")){jQuery(currentPage).contents().css('display','none'); jQuery("#slideNav").css('display','none'); jQuery("#slideNav").contents().css('display','none'); fullScreen = 1; updateBody('fullScreenRevealImg'); }
     //let currentReveal = parseInt(cls.substr(cls.lastIndexOf("1") + 1));
     let currentReveal = cls.substr(cls.lastIndexOf("1"));
     let revealToShow = "#reveal"+currentReveal;
@@ -69,7 +57,9 @@ function revealContent() {
     let speakable = currentText.toString();
     playAudio(speakable);
     console.log(currentText);
-    updateProgress();
+    
+    //move audio player to side bar
+    jQuery("#audioController").addClass("onScroll");
     console.log("revealContent finish");
 }
 
@@ -85,4 +75,6 @@ function hideReveal() {
     jQuery("h3.currentReveal").removeClass("currentReveal");
     console.log("hide reveal finishes");
     jQuery("#slideNav").css("display","block");
+    //move audio player to bottom
+    jQuery("#audioController").removeClass("onScroll");
 }
