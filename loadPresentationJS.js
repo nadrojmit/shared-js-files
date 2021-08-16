@@ -30,7 +30,7 @@ function loadScript(number, url)
     }
 }
 
-let scriptURL = 'https://cdn.jsdelivr.net/gh/nadrojmit/shared-js-files@v1.25/';
+let scriptURL = 'https://cdn.jsdelivr.net/gh/nadrojmit/shared-js-files@v1.26/';
 let JStoLoad = {
     1: scriptURL+'rootAPI.js',
     2: scriptURL+'reveals.js',
