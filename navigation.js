@@ -36,6 +36,7 @@ function progressSlide() {
         if(currentSlide==actualSlideCount) {
             //show everything till the end of the page
             jQuery("h2.current").nextUntil("h4").css("display","block");
+            jQuery("h2.current :not(h3) img").css('display', 'block');
             //remove next slide event from next button and add close window function
             jQuery("#next").off("click", progressSlide);
             jQuery("#next").on("click", closeLightbox);

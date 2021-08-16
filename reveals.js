@@ -50,10 +50,12 @@ function revealContent() {
             updateBody('fullScreenRevealImg');
             }
     }
-    //let currentReveal = parseInt(cls.substr(cls.lastIndexOf("1") + 1));
-    let currentReveal = cls.substr(cls.lastIndexOf("1"));
+    let currentReveal = cls.substr(6);
+    console.log("revealContent: currentReveal ID: "+currentReveal);
+    //let currentReveal = cls.substr(cls.lastIndexOf("1"));
     let revealToShow = "#reveal"+currentReveal;
     jQuery(revealToShow).css("display","block");
+    jQuery(revealToShow+" img").css("display","block");
     jQuery(revealToShow).contents().css("display","block");    
     jQuery('<button type="buton" id="close">CLOSE</button>').appendTo(revealToShow);
     //add hideReveal function to close button
