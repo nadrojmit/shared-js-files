@@ -30,14 +30,14 @@ function loadScript(number, url)
     }
 }
 
-let scriptURL = 'https://cdn.jsdelivr.net/gh/nadrojmit/shared-js-files@v1.27/';
+let scriptURL = 'https://cdn.jsdelivr.net/gh/nadrojmit/shared-js-files@v1.29/';
 let JStoLoad = {
-    1: 'rootAPI.js',
-    2: 'reveals.js',
-    3: 'audio.js',
-    4: 'progress.js',
-    5: 'initialisePresentation.js',
-    6: "navigation.js"
+    1: scriptURL+'rootAPI.js',
+    2: scriptURL+'reveals.js',
+    3: scriptURL+'audio.js',
+    4: scriptURL+'progress.js',
+    5: scriptURL+'initialisePresentation.js',
+    6: scriptURL+"navigation.js"
 }
 
 function loadPresentationScripts() {
