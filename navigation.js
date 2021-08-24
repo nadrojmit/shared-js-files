@@ -31,12 +31,13 @@ function progressSlide() {
         } 
         //show all of the content between the current h2 and the next h2
         jQuery(".page"+currentSlide).nextUntil("h2, #next").css("display","block");
+        let currentPage = "#page"+currentSlide;
+        jQuery(currentPage+" :not(h3) img").css('display','block');
         //totalPages doesn't work for this, need to revist to see if totalPages can be used here without breaking other stuff
         let actualSlideCount = totalPages-1; 
         if(currentSlide==actualSlideCount) {
             //show everything till the end of the page
             jQuery("h2.current").nextUntil("h4").css("display","block");
-            jQuery("h2.current :not(h3) img").css('display', 'block');
             //remove next slide event from next button and add close window function
             jQuery("#next").off("click", progressSlide);
             jQuery("#next").on("click", closeLightbox);
@@ -48,6 +49,7 @@ function progressSlide() {
         } else {
             //as we've just arrived, disable the next button until the reveals are clicked unless the page is already complete
             let slideReference = currentSlide-1;
+            
             if(!jQuery("h2.page"+currentSlide).hasClass("completed")) {
                 jQuery("#next").addClass("disabled");
                 console.log("progressSlide: next button disabled");
@@ -60,6 +62,8 @@ function progressSlide() {
     //turn the next button on by ID at the end of the sequence
     jQuery("#slideNav").css("display","block");
     jQuery("#back").css("display","block");
+    //check the content doesn't sit under audio controller
+    checkLayout(currentPage);    
     //speak current slide
     let currentText = jQuery("h2.current").nextUntil("h3, #slideNav").text();
     let speakable = currentText.toString();
@@ -70,7 +74,7 @@ function progressSlide() {
 }
 
 function navigateBack(){
-    console.log("navigateback starts");
+    console.log("navigateBack starts");
     //hide all displayed content
     hideAll();
     hideLeftOpenReveals();
@@ -86,6 +90,7 @@ function navigateBack(){
         jQuery(".page"+slideNav).addClass("current");
         //show all of the content between the current h2 and the next h2
         jQuery(".page"+slideNav).nextUntil("h2, #next").css("display","block");
+        jQuery("#page"+slideNav+" :not(h3) img").css('display','block');
         jQuery("#slideNav").css("display","block");
         updateBody('middleScreen');
     } else {
@@ -95,6 +100,7 @@ function navigateBack(){
         updateBody('firstPage');
         //show on the previous h1
         jQuery("#page0").css("display","block");
+        jQuery("#page0 img").css('display', 'block');
         jQuery("#page0").contents().css("display","block");
         //hide back button as this is first page
         jQuery("#back").css("display","none");
@@ -135,4 +141,15 @@ function updateBody(newClass) {
     jQuery("body").addClass(newClass);
 }
 
-
+function checkLayout(currentPage) {
+    let lastOffset = jQuery(currentPage).last().offset();
+    let lastChildTop = lastOffset.top;
+    let lastChildHeight = jQuery(currentPage).height();
+    let lastChildIntersect = lastChildTop + lastChildHeight;
+    let controllerOffest = jQuery("#controllerContainer").offset();
+    let controllerTop = controllerOffest.top;
+    if(lastChildIntersect >= controllerTop) {
+       //move audio player to side bar
+    jQuery("#audioController").addClass("onScroll");
+       }
+}

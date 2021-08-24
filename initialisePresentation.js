@@ -26,6 +26,7 @@ function initialise() {
         addSlideNav();
         addAudioController();
         addProgressBar();
+        showFirstPageImage();
         //speak the content on the first slide
         let currentText = jQuery("#page0").contents().text();
         let speakable = currentText.toString();
@@ -71,6 +72,7 @@ function pagination(){
         let content = jQuery(".entry-header, .entry-content").contents();
         jQuery("#page0").append(content);
         jQuery("body").addClass("firstPage");
+        
     });
     let currentPage = 1;
     jQuery("#container h2").each(function() {
@@ -122,6 +124,11 @@ function getContent(){
     });
     jQuery("<div class='decorativeShape'></div>").appendTo(jQuery("#container"));
     jQuery("#page.site").css("display", "none");
-    
+}
+
+function showFirstPageImage() {
+    jQuery("#page0").css("display","block");
+    jQuery("#page0 img").css('display', 'block');
+    jQuery("#page0").contents().css("display","block");
 }
 

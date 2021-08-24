@@ -56,7 +56,8 @@ function revealContent() {
     let revealToShow = "#reveal"+currentReveal;
     jQuery(revealToShow).css("display","block");
     jQuery(revealToShow+" img").css("display","block");
-    jQuery(revealToShow).contents().css("display","block");    
+    jQuery(revealToShow).contents().css("display","block");
+    jQuery(revealToShow).first().focus();
     jQuery('<button type="buton" id="close">CLOSE</button>').appendTo(revealToShow);
     //add hideReveal function to close button
     jQuery("#close").on("click", hideReveal);
@@ -67,7 +68,7 @@ function revealContent() {
         jQuery("h2.current").addClass("completed");
     }
     //add all text in current reveal to variable and post to responsive voice to speak
-    let currentText = jQuery(revealToShow).text();
+    let currentText = jQuery(revealToShow+" :not(#close)").text();
     let speakable = currentText.toString();
     playAudio(speakable);
     console.log(currentText);
