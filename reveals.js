@@ -36,6 +36,7 @@ function revealContent() {
     let currentClass = jQuery(this.closest("div")).attr('id').split(' ')[0];
     let currentPageID = currentClass.substr(currentClass.length -1);
     let currentPage = "#page"+currentPageID;
+    
     //hide rest of content if this is a full screen reveal
     let fullScreenReveal = jQuery(this).hasClass("full-screen");
     let fullScreenDiagram = jQuery(this).hasClass("full-screen-diagram");
@@ -75,6 +76,8 @@ function revealContent() {
     
     //move audio player to side bar
     jQuery("#audioController").addClass("onScroll");
+    //check page content fits within page
+    checkPageHeight(currentPage);
     console.log("revealContent finish");
 }
 

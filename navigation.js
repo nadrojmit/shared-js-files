@@ -32,6 +32,8 @@ function progressSlide() {
         //show all of the content between the current h2 and the next h2
         jQuery(".page"+currentSlide).nextUntil("h2, #next").css("display","block");
         let currentPage = "#page"+currentSlide;
+        //remove bottom padding if it was added on last page
+        clearBottomPadding(currentPage);
         jQuery(currentPage+" :not(h3) img").css('display','block');
         //totalPages doesn't work for this, need to revist to see if totalPages can be used here without breaking other stuff
         let actualSlideCount = totalPages-1; 
@@ -63,7 +65,9 @@ function progressSlide() {
     jQuery("#slideNav").css("display","block");
     jQuery("#back").css("display","block");
     //check the content doesn't sit under audio controller
-    checkLayout(currentPage);    
+    checkLayout(currentPage);
+    //check page content fits within page
+    checkPageHeight(currentPage);    
     //speak current slide
     let currentText = jQuery("h2.current").nextUntil("h3, #slideNav").text();
     let speakable = currentText.toString();
@@ -82,9 +86,10 @@ function navigateBack(){
     jQuery("h2.current").removeClass("current");
     currentSlide--;
     console.log("navigateback: currentSlide at start of function is: "+currentSlide);
+  
     //if this is not slide 1
     if(currentSlide>1) {
-        let slideNav = currentSlide-1
+        let slideNav = currentSlide-1;
         //show on the previous h2 and add the class current to it
         jQuery(".page"+slideNav).css("display","block");
         jQuery(".page"+slideNav).addClass("current");
@@ -112,7 +117,15 @@ function navigateBack(){
         jQuery("#next").off("click", closeLightbox);
         forwardNavEnabled = 1;
     }
+    
+    let actualCurrentSlide = currentSlide-1;
+    let currentPage = '#page'+actualCurrentSlide;
     resetReveals();
+    //check the content doesn't sit under audio controller
+    checkLayout(currentPage);
+    //check page content fits within page
+    checkPageHeight(currentPage);  
+    
     jQuery("#next").removeClass("disabled");
      //speak current slide
     let currentText = jQuery("h2.current").nextUntil("h3").text();
@@ -142,14 +155,29 @@ function updateBody(newClass) {
 }
 
 function checkLayout(currentPage) {
-    let lastOffset = jQuery(currentPage).last().offset();
-    let lastChildTop = lastOffset.top;
-    let lastChildHeight = jQuery(currentPage).height();
-    let lastChildIntersect = lastChildTop + lastChildHeight;
-    let controllerOffest = jQuery("#controllerContainer").offset();
-    let controllerTop = controllerOffest.top;
-    if(lastChildIntersect >= controllerTop) {
+    console.log("checkLayout: currentPage passed is: "+currentPage);
+    let pageHeight = jQuery(currentPage).height();
+    let controllerOffest = jQuery("#controllerContainer").offset().top;
+    if(pageHeight >= controllerOffest) {
        //move audio player to side bar
-    jQuery("#audioController").addClass("onScroll");
+        jQuery("#audioController").addClass("onScroll");
+        console.log("content touches audio bar so moved to side");
        }
+}
+
+let paddingAdded = 0;
+function checkPageHeight(currentPage) {
+    if(!paddingAdded){
+        let currentPageHeight = jQuery(currentPage).height;
+        let containerHeight = jQuery("#container").height;
+        let controllerHeight = jQuery("#controllerContainer").height;
+        if(currentPageHeight>=containerHeight) {
+                jQuery(currentPage).css("padding-bottom", controllerHeight);
+                paddingAdded = 1;
+           }
+    }
+}
+
+function clearBottomPadding(currentPage){
+    jQuery(currentPage).css("padding-bottom", "0");
 }
