@@ -84,6 +84,8 @@ function navigateBack(){
     hideLeftOpenReveals();
     //remove the class current from the previous page
     jQuery("h2.current").removeClass("current");
+    //move audio player to bottom
+    jQuery("#audioController").removeClass("onScroll");
     currentSlide--;
     console.log("navigateback: currentSlide at start of function is: "+currentSlide);
   
@@ -157,8 +159,11 @@ function updateBody(newClass) {
 function checkLayout(currentPage) {
     console.log("checkLayout: currentPage passed is: "+currentPage);
     let pageHeight = jQuery(currentPage).height();
-    let controllerOffest = jQuery("#controllerContainer").offset().top;
-    if(pageHeight >= controllerOffest) {
+    let pageOffset = jQuery(currentPage).offset().top;
+    let pagePosition = pageHeight + pageOffset; 
+    let controllerOffest = jQuery("#audioController").offset().top;
+    console.log("checkLayout: pageHeight: "+pageHeight+" pageOffset: "+pageOffset+" pagePosition: "+pagePosition+" controllerOffset from Top: "+controllerOffest);
+    if(pagePosition >= controllerOffest) {
        //move audio player to side bar
         jQuery("#audioController").addClass("onScroll");
         console.log("content touches audio bar so moved to side");
