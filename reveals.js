@@ -46,10 +46,10 @@ function revealContent() {
         jQuery("#slideNav").contents().css('display','none'); 
         fullScreen = 1;
         if(fullScreenDiagram) { 
-            updateBody('fullScreenReveal'); } 
+            updateBody('fullScreenReveal diagram'); } 
         else {
             updateBody('fullScreenRevealImg');
-            }
+            } 
     }
     let currentReveal = cls.substr(6);
     console.log("revealContent: currentReveal ID: "+currentReveal);
