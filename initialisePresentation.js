@@ -101,7 +101,7 @@ function getContent(){
     jQuery("#container h3").each(function(index) {
         jQuery("<div id='reveal"+currentReveal+"' class='revealedContent'></div>").insertAfter(jQuery(this));
         //insert a div and append h3 to div and change h3 css selector
-        jQuery(this).append('<span class="tick material-icons">check_circle</span>');
+        jQuery(this).prepend('<span class="tick material-icons">check_circle</span>');
         currentReveal++;
 
   });
