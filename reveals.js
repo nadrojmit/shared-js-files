@@ -4,6 +4,7 @@ loadedScripts++;
 //reveal functions
 
 function resetReveals() {
+    console.log("resetReveals runs");
     //reset the reveal count for the page
     totalReveals = 0;
     //reset viewed reveals for the page
@@ -15,6 +16,9 @@ function resetReveals() {
         let currentReveal = totalReveals+1;
         //increment the count of totalReveals
         totalReveals++;
+        if(jQuery(this).hasClass("clicked")) {
+            totalReveals--; }
+            //reveal count reduced by one becuase buttons have been clicked already
     });
 }
 
@@ -94,5 +98,5 @@ function hideReveal() {
     console.log("hide reveal finishes");
     jQuery("#slideNav").css("display","block");
     //move audio player to bottom
-    jQuery("#audioController").removeClass("onScroll");
+    if(!longPage) {jQuery("#audioController").removeClass("onScroll");}
 }

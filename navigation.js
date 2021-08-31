@@ -17,8 +17,11 @@ function progressSlide() {
         //hide all displayed content
         hideAll();
         hideLeftOpenReveals();
-        //move audio player to bottom
+        //move audio player to bottom and reset long page
         jQuery("#audioController").removeClass("onScroll");
+        longPage = 0;
+        //manually padding added to bottom of page variable, this can be removed once the reset padding function works properly
+        paddingAdded = 0;
         //remove the class current from the previous page
         jQuery("h2.current").removeClass("current");
         //show on the next h2 and add the class current to it
@@ -31,9 +34,11 @@ function progressSlide() {
         } 
         //show all of the content between the current h2 and the next h2
         jQuery(".page"+currentSlide).nextUntil("h2, #next").css("display","block");
+        resetReveals();
         let currentPage = "#page"+currentSlide;
         //remove bottom padding if it was added on last page
-        clearBottomPadding(currentPage);
+        let lastPage = currentSlide-1;
+        clearBottomPadding(lastPage);
         jQuery(currentPage+" :not(h3) img").css('display','block');
         //totalPages doesn't work for this, need to revist to see if totalPages can be used here without breaking other stuff
         let actualSlideCount = totalPages-1; 
@@ -53,14 +58,16 @@ function progressSlide() {
             let slideReference = currentSlide-1;
             
             if(!jQuery("h2.page"+currentSlide).hasClass("completed")) {
-                jQuery("#next").addClass("disabled");
-                console.log("progressSlide: next button disabled");
+                if(totalReveals !== 0){
+                    jQuery("#next").addClass("disabled");
+                    console.log("progressSlide: next button disabled");
+                };                
             }
     }
     //increment the current slide
     currentSlide++;
     console.log("currentSlide on progressSlide change is: "+currentSlide);
-    resetReveals();
+    
     //turn the next button on by ID at the end of the sequence
     jQuery("#slideNav").css("display","block");
     jQuery("#back").css("display","block");
@@ -79,6 +86,8 @@ function progressSlide() {
 
 function navigateBack(){
     console.log("navigateBack starts");
+    //manually padding added to bottom of page variable, this can be removed once the reset padding function works properly
+    paddingAdded = 0;
     //hide all displayed content
     hideAll();
     hideLeftOpenReveals();
@@ -88,7 +97,6 @@ function navigateBack(){
     jQuery("#audioController").removeClass("onScroll");
     currentSlide--;
     console.log("navigateback: currentSlide at start of function is: "+currentSlide);
-  
     //if this is not slide 1
     if(currentSlide>1) {
         let slideNav = currentSlide-1;
@@ -123,11 +131,14 @@ function navigateBack(){
     let actualCurrentSlide = currentSlide-1;
     let currentPage = '#page'+actualCurrentSlide;
     resetReveals();
+    
     //check the content doesn't sit under audio controller
     checkLayout(currentPage);
     //check page content fits within page
     checkPageHeight(currentPage);  
-    
+    //reset current page
+    let lastPage = currentPage-1;
+    clearBottomPadding(currentPage);
     jQuery("#next").removeClass("disabled");
      //speak current slide
     let currentText = jQuery("h2.current").nextUntil("h3").text();
@@ -156,6 +167,8 @@ function updateBody(newClass) {
     jQuery("body").addClass(newClass);
 }
 
+
+let longPage = 0;
 function checkLayout(currentPage) {
     console.log("checkLayout: currentPage passed is: "+currentPage);
     let pageHeight = jQuery(currentPage).height();
@@ -166,23 +179,30 @@ function checkLayout(currentPage) {
     if(pagePosition >= controllerOffest) {
        //move audio player to side bar
         jQuery("#audioController").addClass("onScroll");
+        longPage = 1;
         console.log("content touches audio bar so moved to side");
        }
 }
 
 let paddingAdded = 0;
 function checkPageHeight(currentPage) {
+    console.log("checkPageHeight runs");
     if(!paddingAdded){
-        let currentPageHeight = jQuery(currentPage).height;
-        let containerHeight = jQuery("#container").height;
-        let controllerHeight = jQuery("#controllerContainer").height;
-        if(currentPageHeight>=containerHeight) {
+        let currentPageHeight = jQuery(currentPage).height();
+        let pageOffset = jQuery(currentPage).offset().top;
+        let pagePosition = currentPageHeight + pageOffset;
+        let controllerOffest = jQuery("#controllerContainer").offset().top;
+        let controllerHeight = jQuery("#controllerContainer").height()+10;
+        console.log("checkPageHeight: currentPageHeight: "+currentPageHeight+" pageOffset: "+pageOffset+" pagePosition: "+pagePosition+" controllerOffset from Top: "+controllerOffest);
+        if(pagePosition>=controllerOffest) {
                 jQuery(currentPage).css("padding-bottom", controllerHeight);
                 paddingAdded = 1;
+                console.log("revealed content exceeds page height so padding added to bottom");
            }
     }
 }
 
 function clearBottomPadding(currentPage){
-    jQuery(currentPage).css("padding-bottom", "0");
+    jQuery("#page"+currentPage).css("padding-bottom", "0");
+    console.log("bottom padding removed from bottom of page: currentPage ID"+currentPage);
 }
