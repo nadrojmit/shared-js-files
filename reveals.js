@@ -73,7 +73,7 @@ function revealContent() {
         jQuery("h2.current").addClass("completed");
     }
     //add all text in current reveal to variable and post to responsive voice to speak
-    let currentText = jQuery(revealToShow+" :not(#close)").text();
+    let currentText = jQuery(revealToShow+" :not(#close, ul)").text();
     let speakable = currentText.toString();
     playAudio(speakable);
     console.log(currentText);
