@@ -124,11 +124,13 @@ function getContent(){
     });
     jQuery("<div class='decorativeShape'></div>").appendTo(jQuery("#container"));
     jQuery("#page.site").css("display", "none");
+    
 }
 
 function showFirstPageImage() {
     jQuery("#page0").css("display","block");
     jQuery("#page0 img").css('display', 'block');
     jQuery("#page0").contents().css("display","block");
+    checkLayout("#page0");
 }
 
