@@ -13,12 +13,14 @@ let replayFromPlay = 0;
 function addAudioController() {
 jQuery("h1").each(function() {
         //attach audio controller
-        jQuery("#controllerContainer").append('<nav id="audioController" class="audioController"><button type="buton" id="playPause" class="material-icons">pause</button>&nbsp<button type="buton" id="replay" class="material-icons">replay</button>&nbsp<button type="buton" id="mute" class="material-icons">volume_off</button></nav>');
+        jQuery("#controllerContainer").append('<nav id="audioController" class="audioController"><button type="buton" id="playPause" title="Play" class="material-icons">play_arrow</button>&nbsp<button type="buton" title="Replay from start" id="replay" class="material-icons">replay</button>&nbsp<button title="Mute" type="buton" id="mute" class="material-icons">volume_off</button></nav>');
+        console.log("addAudioController: controller added");
         //add the audio functions
         jQuery("#playPause").on("click", pausePlay);
         jQuery("#replay").on("click", replay);
         jQuery("#mute").on("click", mute);
     });
+    checkAudio();
 }
 
 function playAudio(text){
@@ -26,7 +28,7 @@ function playAudio(text){
     lastPlayed = text;
     if(!muted){
         responsiveVoice.speak(text,'UK English Female',{onend: audioEnd});
-        jQuery("#playPause").addClass("pause").text("pause");
+        jQuery("#playPause").addClass("pause").text("pause").attr("title","Pause");
         playing = 1;
         }
 }
@@ -35,7 +37,7 @@ function pausePlay() {
     if(!muted){
         if(playing){
             responsiveVoice.pause();
-            jQuery("#playPause").removeClass("pause").text("play_arrow");
+            jQuery("#playPause").removeClass("pause").text("play_arrow").attr("title","Play");
             playing = 0;
         }
         else {
@@ -45,14 +47,14 @@ function pausePlay() {
             } else {
                 responsiveVoice.resume();
             }
-            jQuery("#playPause").addClass("pause").text("pause");
+            jQuery("#playPause").addClass("pause").text("pause").attr("title","Pause");
             playing = 1;
         }
     }
 }
 
 function audioEnd() {
-    jQuery("#playPause").removeClass("pause").text("play_arrow");
+    jQuery("#playPause").removeClass("pause").text("play_arrow").attr("title","Play");
     playing = 0;
     replayFromPlay = 1;
 }
@@ -64,19 +66,26 @@ function replay(){
 
 function mute(){
     if(!muted) {
+        console.log("mute: audio muted");
         responsiveVoice.cancel();
         muted = 1;
-        jQuery("#mute").addClass("muted").text('volume_up');
-        jQuery("#playPause").removeClass("pause").text("play_arrow");
+        jQuery("#mute").addClass("muted").text('volume_up').attr("title","Unmute");
+        jQuery("#playPause").removeClass("pause").text("play_arrow").attr("title","Audio muted, unmute to play");
+        jQuery("#replay").attr("title","Audio muted, unmute to play");
     } else {
+        console.log("mute: audio unmuted");
         muted = 0;
-        jQuery("#mute").removeClass("muted").text('volume_off');
+        jQuery("#mute").removeClass("muted").text('volume_off').attr("title","Mute");
+        jQuery("#playPause").attr("title","Play");
+        jQuery("#replay").attr("title","Replay from start");
     }
+    setAudioPreference();
 }
 
 function cancelAudio(){
     //console.log("cancelAudio: Audio cancelled");
     //responsiveVoice.speak(" ");
+    console.log("cancelAudio: audio cancelled");
     responsiveVoice.cancel();
     jQuery("#playPause").removeClass("pause").text("play_arrow");
 }

@@ -11,6 +11,8 @@ let activityComplete = 0;
 let forwardNavEnabled = 1;
 let courseInitialised = 0;
 var initialiseProject;
+let previouslyCompleted = 0;
+
 jQuery(document).ready(function() {
     initialiseProject = setInterval(function() {initialise();}, 5);
 });
@@ -21,6 +23,8 @@ function initialise() {
     if(loadedScripts==requiredScripts) {
         clearInterval(initialiseProject);
         console.log("initialise start");
+        //check URL for whether activity completed and audio muted
+        checkCompletion();
         definePages();
         defineReveals();
         addSlideNav();
@@ -77,6 +81,7 @@ function pagination(){
     let currentPage = 1;
     jQuery("#container h2").each(function() {
         jQuery("<div id='page"+currentPage+"' class='page'></div>").appendTo("#container");
+        if(previouslyCompleted) {jQuery('#page'+currentPage).addClass('completed');}
         if(currentPage==jQuery("#container h2").length) {
             let lastPage = '#page'+currentPage;
             jQuery(lastPage).addClass('lastPage');
@@ -102,8 +107,8 @@ function getContent(){
         jQuery("<div id='reveal"+currentReveal+"' class='revealedContent'></div>").insertAfter(jQuery(this));
         //insert a div and append h3 to div and change h3 css selector
         jQuery(this).prepend('<span class="tick material-icons">check_circle</span>');
+        if(previouslyCompleted) {jQuery(this).addClass('clicked');}
         currentReveal++;
-
   });
     jQuery("#container h3").each(function(index) {
         var currentReveal = index+1;
