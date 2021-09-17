@@ -56,7 +56,8 @@ function revealContent() {
             updateBody('fullScreenRevealImg');
             } 
     } else {
-        jQuery("body").scrollTop(jQuery(this).offset().top);
+        let scrollPageTo = jQuery(this).offset().top * 0.8;
+        jQuery("body").scrollTop(scrollPageTo);
     }
     let currentReveal = cls.substr(6);
     console.log("revealContent: currentReveal ID: "+currentReveal);

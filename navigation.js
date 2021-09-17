@@ -76,7 +76,7 @@ function progressSlide() {
     //check page content fits within page
     checkPageHeight(currentPage);    
     //scroll to top of the page
-    jQuery('body').scrollTop(0);
+    jQuery('html').scrollTop(0);
         //speak current slide
     let currentText = jQuery("h2.current").nextUntil("h3, #slideNav").text();
     let speakable = currentText.toString();
@@ -139,7 +139,7 @@ function navigateBack(){
     //check page content fits within page
     checkPageHeight(currentPage);  
     //scroll to top of the page
-    jQuery('body').scrollTop(0);
+    jQuery('html').scrollTop(0);
     //reset current page
     let lastPage = currentPage-1;
     clearBottomPadding(currentPage);
