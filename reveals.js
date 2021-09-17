@@ -49,11 +49,14 @@ function revealContent() {
         jQuery("#slideNav").css('display','none'); 
         jQuery("#slideNav").contents().css('display','none'); 
         fullScreen = 1;
+        jQuery("body").scrollTop(0);
         if(fullScreenDiagram) { 
             updateBody('fullScreenReveal diagram'); } 
         else {
             updateBody('fullScreenRevealImg');
             } 
+    } else {
+        jQuery("body").scrollTop(jQuery(this).offset().top);
     }
     let currentReveal = cls.substr(6);
     console.log("revealContent: currentReveal ID: "+currentReveal);
@@ -72,6 +75,7 @@ function revealContent() {
         jQuery("#next").removeClass("disabled");
         jQuery("h2.current").addClass("completed");
     }
+    
     //add all text in current reveal to variable and post to responsive voice to speak
     let currentText = jQuery(revealToShow+" :not(#close, ul)").text();
     let speakable = currentText.toString();
