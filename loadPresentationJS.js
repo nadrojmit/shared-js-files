@@ -1,6 +1,16 @@
 jQuery(document).ready(function() {
-    loadPresentationScripts();
+    let jsNotRequired = checkURL();
+    //onload run the initial script loading function
+    if(!jsNotRequired) {loadPresentationScripts();}
 });
+
+function checkURL() {
+    let searchURL = new URLSearchParams(window.location.search);
+    if(searchURL.has('forums')) {
+        console.log("checkURL: JS should not be loaded")
+        return true;
+    }
+}
 
 let totalScripts = 0;
 let loadedScripts = 0;
@@ -30,7 +40,7 @@ function loadScript(number, url)
     }
 }
 
-let scriptURL = 'https://cdn.jsdelivr.net/gh/nadrojmit/shared-js-files@v1.40/';
+let scriptURL = 'https://cdn.jsdelivr.net/gh/nadrojmit/shared-js-files@v1.41/';
 let JStoLoad = {
     1: scriptURL+'rootAPI.js',
     2: scriptURL+'reveals.js',
