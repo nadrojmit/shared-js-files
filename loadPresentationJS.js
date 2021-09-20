@@ -5,8 +5,10 @@ jQuery(document).ready(function() {
 });
 
 function checkURL() {
-    let externalURL = window.location.href.indexOf("forums") > -1;
-    if(externalURL) {
+    let currentURL = window.location.href;
+    console.log("checkURL runs and currentURL: "+currentURL);
+    let forumString = /forums/;
+    if(forumString.test(currentURL)){
         console.log("checkURL: JS should not be loaded")
         return true;
     }
@@ -40,7 +42,7 @@ function loadScript(number, url)
     }
 }
 
-let scriptURL = 'https://cdn.jsdelivr.net/gh/nadrojmit/shared-js-files@v1.42/';
+let scriptURL = 'https://cdn.jsdelivr.net/gh/nadrojmit/shared-js-files@v1.43/';
 let JStoLoad = {
     1: scriptURL+'rootAPI.js',
     2: scriptURL+'reveals.js',
