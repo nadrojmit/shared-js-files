@@ -27,7 +27,7 @@ function playAudio(text){
     text = text.replace(/,/g, "");
     lastPlayed = text;
     if(!muted){
-        responsiveVoice.speak(text,'UK English Female',{onend: audioEnd});
+        responsiveVoice.speak(text,'Australian Female',{onend: audioEnd});
         jQuery("#playPause").addClass("pause").text("pause").attr("title","Pause");
         playing = 1;
         }
