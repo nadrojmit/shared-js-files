@@ -13,7 +13,7 @@ let replayFromPlay = 0;
 function addAudioController() {
 jQuery("h1").each(function() {
         //attach audio controller
-        jQuery("#controllerContainer").append('<nav id="audioController" class="audioController"><button type="buton" id="playPause" title="Play" class="material-icons">play_arrow</button>&nbsp<button type="buton" title="Replay from start" id="replay" class="material-icons">replay</button>&nbsp<button title="Mute" type="buton" id="mute" class="material-icons">volume_off</button></nav>');
+        jQuery("#controllerContainer").append('<nav id="audioController" class="audioController"><button type="buton" id="playPause" title="Play" class="material-icons">play_arrow</button>&nbsp<button type="buton" title="Replay from start" id="replay" class="material-icons">replay</button>&nbsp<button title="Mute" type="buton" id="mute" class="material-icons">volume_up</button></nav>');
         console.log("addAudioController: controller added");
         //add the audio functions
         jQuery("#playPause").on("click", pausePlay);
@@ -69,13 +69,13 @@ function mute(){
         console.log("mute: audio muted");
         responsiveVoice.cancel();
         muted = 1;
-        jQuery("#mute").addClass("muted").text('volume_up').attr("title","Unmute");
+        jQuery("#mute").addClass("muted").text('volume_off').attr("title","Unmute");
         jQuery("#playPause").removeClass("pause").text("play_arrow").attr("title","Audio muted, unmute to play");
         jQuery("#replay").attr("title","Audio muted, unmute to play");
     } else {
         console.log("mute: audio unmuted");
         muted = 0;
-        jQuery("#mute").removeClass("muted").text('volume_off').attr("title","Mute");
+        jQuery("#mute").removeClass("muted").text('volume_up').attr("title","Mute");
         jQuery("#playPause").attr("title","Play");
         jQuery("#replay").attr("title","Replay from start");
     }
