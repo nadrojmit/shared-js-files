@@ -31,10 +31,6 @@ function initialise() {
         addAudioController();
         addProgressBar();
         showFirstPageImage();
-        //speak the content on the first slide
-        let currentText = jQuery("#page0").contents().text();
-        let speakable = currentText.toString();
-        playAudio(speakable);
         console.log("initialise finished");
     }
 }
@@ -59,6 +55,7 @@ function defineReveals() {
             let currentReveal = totalReveals+1;
             //give each h3 a unique numbered class
             jQuery(this).addClass("reveal"+currentReveal);
+            if(jQuery(this).hasClass("wp-block-heading")) {jQuery(this).removeClass("wp-block-heading");}
             //add reveal event to h3
             jQuery(this).on("click", revealContent);
             //increment the count of totalReveals
